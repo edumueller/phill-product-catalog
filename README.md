@@ -16,6 +16,22 @@ $ cd phill-product-catalog
 $ docker-compose up
 ```
 
+# Tests
+
+Each microservice has it's own tests suite. To run the tests, you can navigate to the microservice's folder, then run the following commands:
+
+```
+$ npm install
+
+$ npm run test
+```
+
+## Test coverage
+
+- Authentication Microservice: `99%` ([view](./images/auth-coverage-report.png))
+- Product Catalog Microservice (API): `98.13%` ([view](./images/catalog-coverage-report.png))
+- Worker Microservice (job queue / processor): `100%` ([view](./images/worker-coverage-report.png))
+
 # Submodules:
 
 This project is split into 4 different repositories:
@@ -92,3 +108,17 @@ The job tries to update the supply chain with the latest product info.
 If the job fails, it will automatically retry using an exponential time function to increment the wait time between retries a maximum of 18 times in 72 hours.
 
 When the product is successfully updated in the supply chain, it emits a sync-complete event that is caught by the product catalog microservice, updating the syncCompletedAt field with a timestamp from when the product information in the supply chain was updated.
+
+# Test Coverage Reports
+
+## Auth
+
+![alt text](./images/auth-coverage-report.png?raw=true)
+
+## Catalog
+
+![alt text](./images/catalog-coverage-report.png?raw=true)
+
+## Worker
+
+![alt text](./images/worker-coverage-report.png?raw=true)
