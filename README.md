@@ -53,6 +53,8 @@ Using NATS Streaming Server to communicate between microservices is way more per
 
 ## Authentication Microservice
 
+[github repo](https://github.com/edumueller/phill-catalog-auth)
+
 JWT Authentication, User CRUD, Logout
 
 | Verb | Endpoint     | URL                    | Params          |
@@ -64,6 +66,8 @@ JWT Authentication, User CRUD, Logout
 
 ## Product Catalog Microservice
 
+[github repo](https://github.com/edumueller/phill-catalog-api)
+
 Product CRUD - RESTful API
 
 | Verb | Endpoint | URL                 | Params                                           |
@@ -74,13 +78,13 @@ Product CRUD - RESTful API
 
 ## Phill SDK
 
-### [`@phill-sdk/common`](./common)
+See the npm package [@phill-sdk/common](https://www.npmjs.com/package/@phill-sdk/common) or the [github repo](https://github.com/edumueller/phill-catalog-common)
 
 This is an NPM Package that I've published in order to share classes, interfaces, types, handlers, etc. between different projects.
 
-See the [@phill-sdk/common](https://www.npmjs.com/package/@phill-sdk/common)
-
 ## Worker Microservice
+
+[github repo](https://github.com/edumueller/phill-catalog-worker)
 
 This microservice listens for published `product:created` and `product:updated` events, then adds a job to the queue to be processed.
 
