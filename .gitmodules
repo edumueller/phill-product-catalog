@@ -7,3 +7,6 @@
 [submodule "infra"]
 	path = infra
 	url = git@github.com:edumueller/phill-catalog-infra
+[submodule "common"]
+	path = common
+	url = git@github.com:edumueller/phill-catalog-common
