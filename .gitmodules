@@ -10,3 +10,6 @@
 [submodule "common"]
 	path = common
 	url = git@github.com:edumueller/phill-catalog-common
+[submodule "auth"]
+	path = auth
+	url = git@github.com:edumueller/phill-catalog-auth
