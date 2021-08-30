@@ -1,8 +1,29 @@
-# phill-product-catalog
+# Product Catalog
+
+This project contains all the parts of the Product Catalog Application, each on its own sub-directory and respective github repos.
+
+The goal of this repository is to facilitate the development and management of the application.
 
 # Running this project
 
-To run the project, you can clone this repository with all the submodules using the command ``
+To run the project, you can clone this repository with all the submodules using the following commands:
+
+```
+$ git clone --recursive git@github.com:edumueller/phill-product-catalog.git
+
+$ cd phill-product-catalog
+
+$ docker-compose up
+```
+
+# Submodules:
+
+This project is split into 4 different repositories:
+
+- Authentication Microservice: [auth](#authentication-microservice)
+- Product Catalog Microservice (API): [catalog](#product-catalog-microservice)
+- Worker Microservice (job queue / processor): [worker](#worker-microservice)
+- Shared NPM Package: [@phill-sdk/common](#phill-sdk)
 
 # Infrastructure as Code - Kubernetes
 
@@ -29,3 +50,41 @@ I have created a microservice-oriented, event-driven architecture, using [NATS S
 # Performance
 
 Using NATS Streaming Server to communicate between microservices is way more performant than using http. NATS can deliver between 7 and 88 million messages per second. Also, this microservice-oriented architecture can be easily scaled horizontally.
+
+## Authentication Microservice
+
+JWT Authentication, User CRUD, Logout
+
+| Verb | Endpoint     | URL                    | Params          |
+| ---- | ------------ | ---------------------- | --------------- |
+| POST | Sign Up      | /api/users/signup      | email, password |
+| POST | Sign In      | /api/users/signin      | email, password |
+| GET  | Current User | /api/users/currentuser |                 |
+| POST | Sign Out     | /api/users/signout     |                 |
+
+## Product Catalog Microservice
+
+Product CRUD - RESTful API
+
+| Verb | Endpoint | URL                 | Params                                           |
+| ---- | -------- | ------------------- | ------------------------------------------------ |
+| POST | new      | /api/products       | name (string), price (number), quantity (number) |
+| GET  | show     | /api/products/`:id` |                                                  |
+| PUT  | update   | /api/products/`:id` |                                                  |
+
+## Phill SDK
+
+### [`@phill-sdk/common`](./common)
+
+This is an NPM Package that I've published in order to share classes, interfaces, types, handlers, etc. between different projects.
+
+See the [@phill-sdk/common](https://www.npmjs.com/package/@phill-sdk/common)
+
+## Worker Microservice
+
+This microservice listens for published `product:created` and `product:updated` events, then adds a job to the queue to be processed.
+
+The job tries to update the supply chain with the latest product info.
+If the job fails, it will automatically retry using an exponential time function to increment the wait time between retries a maximum of 18 times in 72 hours.
+
+When the product is successfully updated in the supply chain, it emits a sync-complete event that is caught by the product catalog microservice, updating the syncCompletedAt field with a timestamp from when the product information in the supply chain was updated.
