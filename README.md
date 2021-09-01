@@ -53,9 +53,9 @@ Since the supply chain API is unreliable and might return random errors, the pro
 
 As soon as a product is received and added, an event containing that product's data is published to all microservices that are listening.
 
-The [workers](./worker) listen to product:created and product:updated events. When one of these events is received, a job is added to our queue. _To manage the queue we are using the [Bull](https://optimalbits.github.io/bull/) library._
+The [workers](#worker-microservice) listen to product:created and product:updated events. When one of these events is received, a job is added to our queue. _To manage the queue we are using the [Bull](https://optimalbits.github.io/bull/) library._
 
-To make sure every update is successfully received by the Supply Chain API, the [workers](./worker) send a POST request, if the request fails, the job is marked as unsuccessful and an exponential time function is used to retry the job 18 times in 72 hours (see line 18 from [this file](./worker/src/events/listeners/product-updated-listener.ts)).
+To make sure every update is successfully received by the Supply Chain API, the [workers](#worker-microservice) send a POST request, if the request fails, the job is marked as unsuccessful and an exponential time function is used to retry the job 18 times in 72 hours (see line 18 from [this file](https://github.com/edumueller/phill-catalog-worker/blob/master/src/events/listeners/product-updated-listener.ts)).
 
 This approach ensures that product updates are synchronized as soon as possible, but also prevents job processing delays and big backlogs of pending requests from being processed at the same time.
 
