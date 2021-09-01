@@ -41,9 +41,9 @@ This project is split into 4 different repositories:
 - Worker Microservice (job queue / processor): [worker](#worker-microservice)
 - Shared NPM Package: [@phill-sdk/common](#phill-sdk)
 
-# Infrastructure as Code - Kubernetes
+# Auth: Infrastructure as Code - Kubernetes
 
-This project can run in a development machine using `docker-compose up`, but I have also created the kubernetes configuration files that can be used to automatically create all the infrastructure necessary.
+This project can run in a development machine using `docker-compose up`, but I have also created the kubernetes configuration files that can be used to automatically create all the infrastructure necessary. These files are located in the [infra](https://github.com/edumueller/phill-catalog-infra) directory.
 
 You can also test these configurations by using [skaffold](https://skaffold.dev/) in your local environment (tested on MacOS Big Sur).
 
